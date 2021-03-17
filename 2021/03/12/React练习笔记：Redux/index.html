@@ -23,21 +23,23 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"leo-captain.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
-<meta name="description" content="本文参考了以下两篇文章： 1、https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;7XcetC-3ksYAl2OShuw7CA ，原作者：灰灰 2、https:&#x2F;&#x2F;www.cnblogs.com&#x2F;kenanyah&#x2F;p&#x2F;13246934.html ，原作者：XyanZhang 如有侵权，请通知本人删除~ 一、new操作符的定义与功能MDN中的定义：  new 运算符创建一个用户定义的对象类型的实例">
+<meta name="description" content="本练习基于尚硅谷的React视频教程完成，原视频链接地址： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1wy4y1D7JT?p&#x3D;97 如有侵权，请及时告知本人删除~ 一、Redux简介 1、redux是一个专门用于做状态管理的JS库(不是react插件库)。 2、它可以用在react, angular, vue等项目中, 但基本与react配合使用。 3、作用: 集中式管理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS基础练习笔记：手写一个new操作符">
-<meta property="og:url" content="http://leo-captain.github.io/2021/03/02/JS%E5%9F%BA%E7%A1%80%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAnew%E6%93%8D%E4%BD%9C%E7%AC%A6/index.html">
+<meta property="og:title" content="React练习笔记：Redux[转载]">
+<meta property="og:url" content="http://leo-captain.github.io/2021/03/12/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9ARedux/index.html">
 <meta property="og:site_name" content="Leo的小屋">
-<meta property="og:description" content="本文参考了以下两篇文章： 1、https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;7XcetC-3ksYAl2OShuw7CA ，原作者：灰灰 2、https:&#x2F;&#x2F;www.cnblogs.com&#x2F;kenanyah&#x2F;p&#x2F;13246934.html ，原作者：XyanZhang 如有侵权，请通知本人删除~ 一、new操作符的定义与功能MDN中的定义：  new 运算符创建一个用户定义的对象类型的实例">
+<meta property="og:description" content="本练习基于尚硅谷的React视频教程完成，原视频链接地址： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1wy4y1D7JT?p&#x3D;97 如有侵权，请及时告知本人删除~ 一、Redux简介 1、redux是一个专门用于做状态管理的JS库(不是react插件库)。 2、它可以用在react, angular, vue等项目中, 但基本与react配合使用。 3、作用: 集中式管理">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-02T01:20:07.000Z">
-<meta property="article:modified_time" content="2021-03-02T02:14:30.230Z">
+<meta property="og:image" content="https://i.loli.net/2021/03/12/c5vzCBHTj6biWFM.png">
+<meta property="article:published_time" content="2021-03-12T02:48:16.000Z">
+<meta property="article:modified_time" content="2021-03-12T13:02:27.110Z">
 <meta property="article:author" content="Leo Qian">
-<meta property="article:tag" content="JS基础练习笔记">
+<meta property="article:tag" content="React练习笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/03/12/c5vzCBHTj6biWFM.png">
 
 
-<link rel="canonical" href="http://leo-captain.github.io/2021/03/02/JS%E5%9F%BA%E7%A1%80%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAnew%E6%93%8D%E4%BD%9C%E7%AC%A6/">
+<link rel="canonical" href="http://leo-captain.github.io/2021/03/12/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9ARedux/">
 
 
 <script class="page-configurations">
@@ -49,7 +51,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>JS基础练习笔记：手写一个new操作符 | Leo的小屋</title>
+<title>React练习笔记：Redux[转载] | Leo的小屋</title>
   
 
 
@@ -157,7 +159,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81new%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%8A%9F%E8%83%BD"><span class="nav-number">1.</span> <span class="nav-text">一、new操作符的定义与功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E3%80%81new%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">二、new操作符的工作流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAnew%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">3.</span> <span class="nav-text">三、手写一个new操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">四、总结</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81action"><span class="nav-number">1.</span> <span class="nav-text">1、action</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81reducer"><span class="nav-number">2.</span> <span class="nav-text">2、reducer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81store"><span class="nav-number">3.</span> <span class="nav-text">3、store</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -227,7 +229,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://leo-captain.github.io/2021/03/02/JS%E5%9F%BA%E7%A1%80%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAnew%E6%93%8D%E4%BD%9C%E7%AC%A6/">
+    <link itemprop="mainEntityOfPage" href="http://leo-captain.github.io/2021/03/12/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9ARedux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -240,7 +242,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          JS基础练习笔记：手写一个new操作符
+          React练习笔记：Redux[转载]
         </h1>
 
         <div class="post-meta-container">
@@ -252,7 +254,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-03-02 09:20:07 / 修改时间：10:14:30" itemprop="dateCreated datePublished" datetime="2021-03-02T09:20:07+08:00">2021-03-02</time>
+      <time title="创建时间：2021-03-12 10:48:16 / 修改时间：21:02:27" itemprop="dateCreated datePublished" datetime="2021-03-12T10:48:16+08:00">2021-03-12</time>
     </span>
 
   
@@ -265,28 +267,73 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>本文参考了以下两篇文章：</p>
-<p>1、<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7XcetC-3ksYAl2OShuw7CA">https://mp.weixin.qq.com/s/7XcetC-3ksYAl2OShuw7CA</a> ，原作者：灰灰</p>
-<p>2、<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kenanyah/p/13246934.html">https://www.cnblogs.com/kenanyah/p/13246934.html</a> ，原作者：XyanZhang</p>
-<p>如有侵权，请通知本人删除~</p>
-<h4 id="一、new操作符的定义与功能"><a href="#一、new操作符的定义与功能" class="headerlink" title="一、new操作符的定义与功能"></a><strong>一、new操作符的定义与功能</strong></h4><p>MDN中的定义：</p>
-<blockquote>
-<p><strong><code>new</code> 运算符</strong>创建一个用户定义的对象类型的实例或具有构造函数的内置对象的实例。</p>
-</blockquote>
-<p>通俗一点来说，<code>new</code>操作符用于创建一个给定构造函数的实例对象。</p>
-<h4 id="二、new操作符的工作流程"><a href="#二、new操作符的工作流程" class="headerlink" title="二、new操作符的工作流程"></a><strong>二、new操作符的工作流程</strong></h4><ul>
-<li>创建一个新的对象<code>obj</code></li>
-<li>将对象<code>obj</code>与构造函数通过原型链连接起来</li>
-<li>将构造函数中的<code>this</code>绑定到对象<code>obj</code>上</li>
-<li>根据构造函数返回类型作判断，不同的返回类型得到的最终结果不同</li>
-</ul>
-<h4 id="三、手写一个new操作符"><a href="#三、手写一个new操作符" class="headerlink" title="三、手写一个new操作符"></a><strong>三、手写一个new操作符</strong></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myNew</span>(<span class="params">Func, ...args</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 1.创建一个新对象</span></span><br><span class="line">    <span class="keyword">const</span> obj = &#123;&#125;</span><br><span class="line">    <span class="comment">// 2.新对象原型指向构造函数原型对象</span></span><br><span class="line">    obj.__proto__ = Func.prototype</span><br><span class="line">    <span class="comment">// 3.将构造函数的this指向新对象</span></span><br><span class="line">    <span class="keyword">let</span> result = Func.apply(obj, args)</span><br><span class="line">    <span class="comment">// 4.根据返回值判断</span></span><br><span class="line">    <span class="keyword">return</span> result <span class="keyword">instanceof</span> <span class="built_in">Object</span> ? result : obj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a><strong>四、总结</strong></h4><p>根据构造函数返回值的不同，可分为四种情况：</p>
-<p>1、如果没有return，直接返回默认创建的新对象</p>
-<p>2、如果返回this，直接返回默认创建的新对象</p>
-<p>3、如果返回的是非引用类型，直接返回默认创建的新对象</p>
-<p>4、如果返回的是引用类型，就把构造函数返回的结果传给外界</p>
+        <p>本练习基于尚硅谷的React视频教程完成，原视频链接地址：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wy4y1D7JT?p=97">https://www.bilibili.com/video/BV1wy4y1D7JT?p=97</a></p>
+<p>如有侵权，请及时告知本人删除~</p>
+<p>一、Redux简介</p>
+<p>1、redux是一个专门用于做状态管理的JS库(不是react插件库)。</p>
+<p>2、它可以用在react, angular, vue等项目中, 但基本与react配合使用。</p>
+<p>3、作用: 集中式管理react应用中多个组件共享的状态。</p>
+<p>二、redux的使用情景</p>
+<ol>
+<li><p>某个组件的状态，需要让其他组件可以随时拿到（共享）。</p>
+</li>
+<li><p>一个组件需要改变另一个组件的状态（通信）。</p>
+</li>
+<li><p>总体原则：能不用就不用, 如果不用比较吃力才考虑使用。</p>
+</li>
+</ol>
+<p>三、redux的原理</p>
+<p><img src="https://i.loli.net/2021/03/12/c5vzCBHTj6biWFM.png" alt="image-20210312140611949"></p>
+<p>工作流程：</p>
+<p>1、React Components，即react组件，通过Action Creators创建一个动作对象，包含两个属性，一个是本次的操作类型type，一个是操作数据data。</p>
+<p>2、Action Creators将这个动作对象传给Store，Store将上一次的状态previousState和这次的动作对象action传给Reducers进行处理。</p>
+<p>3、Reducers将处理完成的新状态newState返回给Store。</p>
+<p>4、react组件通过store.getState()方法来获取到处理后的新状态。</p>
+<p>特殊步骤：在初始化时，上一次的状态previousState为undefined，动作对象action的type值会被设置为固定字符串”@@redux/INIT”+少量随机字符，并且没有data属性。Reducers会根据默认的返回值直接初始化一个新的状态出来。</p>
+<p>四、redux三个核心概念</p>
+<h3 id="1、action"><a href="#1、action" class="headerlink" title="1、action"></a>1、action</h3><ol>
+<li><p>动作的对象</p>
+</li>
+<li><p>包含2个属性</p>
+</li>
+</ol>
+<p>type：标识属性, 值为字符串, 唯一, 必要属性</p>
+<p>data：数据属性, 值类型任意, 可选属性</p>
+<ol start="3">
+<li>例子：{ type: ‘ADD_STUDENT’,data:{name: ‘tom’,age:18} }</li>
+</ol>
+<h3 id="2、reducer"><a href="#2、reducer" class="headerlink" title="2、reducer"></a>2、reducer</h3><ol>
+<li><p>用于初始化状态、加工状态。</p>
+</li>
+<li><p>加工时，根据旧的state和action， 产生新的state的*<strong>*纯函数*****</strong>*。****</p>
+</li>
+</ol>
+<h3 id="3、store"><a href="#3、store" class="headerlink" title="3、store"></a>3、store</h3><ol>
+<li><p>将state、action、reducer联系在一起的对象</p>
+</li>
+<li><p>如何得到此对象?</p>
+</li>
+</ol>
+<ol>
+<li><p>import {createStore} from ‘redux’</p>
+</li>
+<li><p>import reducer from ‘./reducers’</p>
+</li>
+<li><p>const store = createStore(reducer)</p>
+</li>
+</ol>
+<ol start="3">
+<li>此对象的功能?</li>
+</ol>
+<ol>
+<li><p>getState(): 得到state</p>
+</li>
+<li><p>dispatch(action): 分发action, 触发reducer调用, 产生新的state</p>
+</li>
+<li><p>subscribe(listener): 注册监听, 当产生了新的state时, 自动调用</p>
+</li>
+</ol>
 
     </div>
 
@@ -296,20 +343,20 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/JS%E5%9F%BA%E7%A1%80%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># JS基础练习笔记</a>
+              <a href="/tags/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># React练习笔记</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/03/01/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%9F%BA%E4%BA%8EReact%E8%84%9A%E6%89%8B%E6%9E%B6%E5%88%B6%E4%BD%9C%E7%9A%84TodoList%E6%A1%88%E4%BE%8B/" rel="prev" title="React练习笔记：基于React脚手架制作的TodoList案例">
-                  <i class="fa fa-chevron-left"></i> React练习笔记：基于React脚手架制作的TodoList案例
+                <a href="/2021/03/08/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9AReact%E8%B7%AF%E7%94%B1/" rel="prev" title="React练习笔记：React路由[转载]">
+                  <i class="fa fa-chevron-left"></i> React练习笔记：React路由[转载]
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/03/03/JS%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AF%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9F/" rel="next" title="JS设计模式（一）：什么是设计模式？[转载]">
-                  JS设计模式（一）：什么是设计模式？[转载] <i class="fa fa-chevron-right"></i>
+                <a href="/2021/03/12/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%82%E5%92%8C%E6%A1%88%E4%BE%8B%EF%BC%88%E4%B8%8D%E4%BD%BF%E7%94%A8Redux%E7%89%88%E6%9C%AC%EF%BC%89/" rel="next" title="React练习笔记：求和案例（不使用Redux版本）">
+                  React练习笔记：求和案例（不使用Redux版本） <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"leo-captain.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="本笔记基于尚硅谷的React视频教程完成，原视频链接地址： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1wy4y1D7JT?p&#x3D;103&amp;spm_id_from&#x3D;pageDriver 如有侵权，请及时告知本人删除~ 一、react-redux基本使用 123456789(1).明确两个概念：			1).UI组件:不能使用任何redux的api，只负责页面的呈现、交互等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React练习笔记：react-redux[转载]">
+<meta property="og:url" content="http://leo-captain.github.io/2021/03/13/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9Areact-redux/index.html">
+<meta property="og:site_name" content="Leo的小屋">
+<meta property="og:description" content="本笔记基于尚硅谷的React视频教程完成，原视频链接地址： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1wy4y1D7JT?p&#x3D;103&amp;spm_id_from&#x3D;pageDriver 如有侵权，请及时告知本人删除~ 一、react-redux基本使用 123456789(1).明确两个概念：			1).UI组件:不能使用任何redux的api，只负责页面的呈现、交互等">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/03/13/QvDrwlkhxUt1gHE.png">
+<meta property="og:image" content="https://i.loli.net/2021/03/13/jMvufieT6zVHE9N.png">
+<meta property="article:published_time" content="2021-03-13T03:45:12.000Z">
+<meta property="article:modified_time" content="2021-03-13T14:45:08.624Z">
+<meta property="article:author" content="Leo Qian">
+<meta property="article:tag" content="React练习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/03/13/QvDrwlkhxUt1gHE.png">
+
+
+<link rel="canonical" href="http://leo-captain.github.io/2021/03/13/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9Areact-redux/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>React练习笔记：react-redux[转载] | Leo的小屋</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Leo的小屋</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Leo Qian</p>
+  <div class="site-description" itemprop="description">欢迎来到Leo的小屋，和Leo一起领略前端的无限魅力</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Leo-captain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Leo-captain" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1537938015@qq.com" title="E-Mail → mailto:1537938015@qq.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+      <br>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=404783770&auto=1&height=66"></iframe>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://leo-captain.github.io/2021/03/13/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9Areact-redux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Leo Qian">
+      <meta itemprop="description" content="欢迎来到Leo的小屋，和Leo一起领略前端的无限魅力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Leo的小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React练习笔记：react-redux[转载]
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-03-13 11:45:12 / 修改时间：22:45:08" itemprop="dateCreated datePublished" datetime="2021-03-13T11:45:12+08:00">2021-03-13</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本笔记基于尚硅谷的React视频教程完成，原视频链接地址：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wy4y1D7JT?p=103&amp;spm_id_from=pageDriver">https://www.bilibili.com/video/BV1wy4y1D7JT?p=103&amp;spm_id_from=pageDriver</a></p>
+<p>如有侵权，请及时告知本人删除~</p>
+<p>一、react-redux基本使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(1).明确两个概念：</span><br><span class="line">			1).UI组件:不能使用任何redux的api，只负责页面的呈现、交互等。</span><br><span class="line">			2).容器组件：负责和redux通信，将结果交给UI组件。</span><br><span class="line">(2).如何创建一个容器组件————靠react-redux 的 connect函数</span><br><span class="line">				connect(mapStateToProps,mapDispatchToProps)(UI组件)</span><br><span class="line">					-mapStateToProps:映射状态，返回值是一个对象</span><br><span class="line">					-mapDispatchToProps:映射操作状态的方法，返回值是一个对象</span><br><span class="line">(3).备注1：容器组件中的store是靠props传进去的，而不是在容器组件中直接引入</span><br><span class="line">(4).备注2：mapDispatchToProps，也可以是一个对象</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/03/13/QvDrwlkhxUt1gHE.png" alt="react-redux模型图"></p>
+<p>二、求和案例的更改</p>
+<p>Count UI组件即为原来components文件夹中的组件，而Count容器组件则是需要放在/src/containers文件夹下的。</p>
+<p>1、改造的第一步是要把原来Count UI组件中所有的redux相关代码移除，全部放入到Count容器组件当中才行：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Count</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	state = &#123;<span class="attr">carName</span>:<span class="string">&#x27;奔驰c63&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//加法</span></span><br><span class="line">	increment = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="keyword">const</span> &#123;value&#125; = <span class="built_in">this</span>.selectNumber</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//减法</span></span><br><span class="line">	decrement = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="keyword">const</span> &#123;value&#125; = <span class="built_in">this</span>.selectNumber</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//奇数再加</span></span><br><span class="line">	incrementIfOdd = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="keyword">const</span> &#123;value&#125; = <span class="built_in">this</span>.selectNumber</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//异步加</span></span><br><span class="line">	incrementAsync = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="keyword">const</span> &#123;value&#125; = <span class="built_in">this</span>.selectNumber</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="comment">//console.log(&#x27;UI组件接收到的props是&#x27;,this.props);</span></span><br><span class="line">		<span class="keyword">return</span> (</span><br><span class="line">			&lt;div&gt;</span><br><span class="line">				&lt;h1&gt;当前求和为：&#123;<span class="built_in">this</span>.props.count&#125;&lt;/h1&gt;</span><br><span class="line">				&lt;select ref=&#123;<span class="function"><span class="params">c</span> =&gt;</span> <span class="built_in">this</span>.selectNumber = c&#125;&gt;</span><br><span class="line">					&lt;option value=<span class="string">&quot;1&quot;</span>&gt;<span class="number">1</span>&lt;/option&gt;</span><br><span class="line">					&lt;option value=<span class="string">&quot;2&quot;</span>&gt;<span class="number">2</span>&lt;/option&gt;</span><br><span class="line">					&lt;option value=<span class="string">&quot;3&quot;</span>&gt;<span class="number">3</span>&lt;/option&gt;</span><br><span class="line">				&lt;/select&gt;&amp;nbsp;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.increment&#125;&gt;+&lt;/button&gt;&amp;nbsp;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.decrement&#125;&gt;-&lt;/button&gt;&amp;nbsp;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.incrementIfOdd&#125;&gt;当前求和为奇数再加&lt;/button&gt;&amp;nbsp;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.incrementAsync&#125;&gt;异步加&lt;/button&gt;&amp;nbsp;</span><br><span class="line">			&lt;/div&gt;</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>2、在容器组件中引入Count UI组件、Action Creators以及最重要的react-redux，使用react-redux中的connect方法将UI组件和容器组件连接起来，并向connect中传入mapStateToProps和mapDispatchToProps两个方法，通过这两个方法向Count UI这个子组件来传递状态的值以及操作状态的方法：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引入Count的UI组件</span></span><br><span class="line"><span class="keyword">import</span> CountUI <span class="keyword">from</span> <span class="string">&#x27;../../components/Count&#x27;</span></span><br><span class="line"><span class="comment">//引入action</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">	createIncrementAction,</span><br><span class="line">	createDecrementAction,</span><br><span class="line">	createIncrementAsyncAction</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;../../redux/count_action&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//引入connect用于连接UI组件与redux</span></span><br><span class="line"><span class="keyword">import</span> &#123;connect&#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">	1.mapStateToProps函数返回的是一个对象；</span></span><br><span class="line"><span class="comment">	2.返回的对象中的key就作为传递给UI组件props的key,value就作为传递给UI组件props的value</span></span><br><span class="line"><span class="comment">	3.mapStateToProps用于传递状态</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mapStateToProps</span>(<span class="params">state</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> &#123;<span class="attr">count</span>:state&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">	1.mapDispatchToProps函数返回的是一个对象；</span></span><br><span class="line"><span class="comment">	2.返回的对象中的key就作为传递给UI组件props的key,value就作为传递给UI组件props的value</span></span><br><span class="line"><span class="comment">	3.mapDispatchToProps用于传递操作状态的方法</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mapDispatchToProps</span>(<span class="params">dispatch</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">		jia:<span class="function"><span class="params">number</span> =&gt;</span> dispatch(createIncrementAction(number)),</span><br><span class="line">		jian:<span class="function"><span class="params">number</span> =&gt;</span> dispatch(createDecrementAction(number)),</span><br><span class="line">		jiaAsync:<span class="function">(<span class="params">number,time</span>) =&gt;</span> dispatch(createIncrementAsyncAction(number,time)),</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用connect()()创建并暴露一个Count的容器组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> connect(mapStateToProps,mapDispatchToProps)(CountUI)</span><br></pre></td></tr></table></figure>
+
+<p>3、在UI组件中通过this.props来调用容器组件传过来的值和方法：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Count</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	state = &#123;<span class="attr">carName</span>:<span class="string">&#x27;奔驰c63&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//加法</span></span><br><span class="line">	increment = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="keyword">const</span> &#123;value&#125; = <span class="built_in">this</span>.selectNumber</span><br><span class="line">		<span class="built_in">this</span>.props.jia(value*<span class="number">1</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//减法</span></span><br><span class="line">	decrement = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="keyword">const</span> &#123;value&#125; = <span class="built_in">this</span>.selectNumber</span><br><span class="line">		<span class="built_in">this</span>.props.jian(value*<span class="number">1</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//奇数再加</span></span><br><span class="line">	incrementIfOdd = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="keyword">const</span> &#123;value&#125; = <span class="built_in">this</span>.selectNumber</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">this</span>.props.count % <span class="number">2</span> !== <span class="number">0</span>)&#123;</span><br><span class="line">			<span class="built_in">this</span>.props.jia(value*<span class="number">1</span>)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//异步加</span></span><br><span class="line">	incrementAsync = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="keyword">const</span> &#123;value&#125; = <span class="built_in">this</span>.selectNumber</span><br><span class="line">		<span class="built_in">this</span>.props.jiaAsync(value*<span class="number">1</span>,<span class="number">500</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="comment">//console.log(&#x27;UI组件接收到的props是&#x27;,this.props);</span></span><br><span class="line">		<span class="keyword">return</span> (</span><br><span class="line">			&lt;div&gt;</span><br><span class="line">				&lt;h1&gt;当前求和为：&#123;<span class="built_in">this</span>.props.count&#125;&lt;/h1&gt;</span><br><span class="line">				&lt;select ref=&#123;<span class="function"><span class="params">c</span> =&gt;</span> <span class="built_in">this</span>.selectNumber = c&#125;&gt;</span><br><span class="line">					&lt;option value=<span class="string">&quot;1&quot;</span>&gt;<span class="number">1</span>&lt;/option&gt;</span><br><span class="line">					&lt;option value=<span class="string">&quot;2&quot;</span>&gt;<span class="number">2</span>&lt;/option&gt;</span><br><span class="line">					&lt;option value=<span class="string">&quot;3&quot;</span>&gt;<span class="number">3</span>&lt;/option&gt;</span><br><span class="line">				&lt;/select&gt;&amp;nbsp;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.increment&#125;&gt;+&lt;/button&gt;&amp;nbsp;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.decrement&#125;&gt;-&lt;/button&gt;&amp;nbsp;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.incrementIfOdd&#125;&gt;当前求和为奇数再加&lt;/button&gt;&amp;nbsp;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.incrementAsync&#125;&gt;异步加&lt;/button&gt;&amp;nbsp;</span><br><span class="line">			&lt;/div&gt;</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4、这样一来容器组件和UI组件的绑定就已经完成了，但仍需要在App.jsx中实现容器组件与store的绑定，才能算大功告成：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Count <span class="keyword">from</span> <span class="string">&#x27;./containers/Count&#x27;</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./redux/store&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> (</span><br><span class="line">			&lt;div&gt;</span><br><span class="line">				&#123;<span class="comment">/* 给容器组件传递store */</span>&#125;</span><br><span class="line">				&lt;Count store=&#123;store&#125; /&gt;</span><br><span class="line">			&lt;/div&gt;</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>5、mapStateToProps和mapDispatchToProps的简写优化：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> connect(</span><br><span class="line">	state=&gt;(&#123;<span class="attr">count</span>:state&#125;),</span><br><span class="line">    &#123;</span><br><span class="line">        jia:createIncrementAction,</span><br><span class="line">        jian:createDecrementAction,</span><br><span class="line">        jiaAsync:createIncrementAsyncAction</span><br><span class="line">    &#125;</span><br><span class="line">)(CountUI)</span><br></pre></td></tr></table></figure>
+
+<p>mapDispatchToProps既可以是一个函数，又可以是一个对象，如果传入的是对象，那么react-redux会自动完成dispatch的操作，不需要人为进行。</p>
+<p>6、Provider组件的使用</p>
+<p>原先，index.js入口文件中需要通过store.subscribe()方法来监听store状态变化，从而在状态变化后进行页面的重新渲染。但是使用了react-redux之后就可以通过connect方法实现对状态的直接监听，不需要在入口文件使用store.subscribe()方法了。</p>
+<p>此外，可以使用react-redux中的Provider组件来对每个用到react-redux的组件进行统一的状态注入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./redux/store&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;Provider&#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">	&lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">		&lt;App/&gt;</span><br><span class="line">	&lt;/Provider&gt;,</span><br><span class="line">	<span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>对应的，不需要在App.jsx中对每个组件进行store的单独绑定了：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Count <span class="keyword">from</span> <span class="string">&#x27;./containers/Count&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> (</span><br><span class="line">			&lt;div&gt;</span><br><span class="line">				&lt;Count/&gt;</span><br><span class="line">			&lt;/div&gt;</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>7、优化文件结构</p>
+<p>尽管到第6步已经基本实现了react-redux的完整功能，但是依旧可以将UI组件和容器组件进行合并，从而实现文件结构的优化。优化后的/containers/Count/index.jsx文件如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="comment">//引入action</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">	createIncrementAction,</span><br><span class="line">	createDecrementAction,</span><br><span class="line">	createIncrementAsyncAction</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;../../redux/count_action&#x27;</span></span><br><span class="line"><span class="comment">//引入connect用于连接UI组件与redux</span></span><br><span class="line"><span class="keyword">import</span> &#123;connect&#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义UI组件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Count</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	state = &#123;<span class="attr">carName</span>:<span class="string">&#x27;奔驰c63&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//加法</span></span><br><span class="line">	increment = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="keyword">const</span> &#123;value&#125; = <span class="built_in">this</span>.selectNumber</span><br><span class="line">		<span class="built_in">this</span>.props.jia(value*<span class="number">1</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//减法</span></span><br><span class="line">	decrement = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="keyword">const</span> &#123;value&#125; = <span class="built_in">this</span>.selectNumber</span><br><span class="line">		<span class="built_in">this</span>.props.jian(value*<span class="number">1</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//奇数再加</span></span><br><span class="line">	incrementIfOdd = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="keyword">const</span> &#123;value&#125; = <span class="built_in">this</span>.selectNumber</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">this</span>.props.count % <span class="number">2</span> !== <span class="number">0</span>)&#123;</span><br><span class="line">			<span class="built_in">this</span>.props.jia(value*<span class="number">1</span>)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//异步加</span></span><br><span class="line">	incrementAsync = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="keyword">const</span> &#123;value&#125; = <span class="built_in">this</span>.selectNumber</span><br><span class="line">		<span class="built_in">this</span>.props.jiaAsync(value*<span class="number">1</span>,<span class="number">500</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="comment">//console.log(&#x27;UI组件接收到的props是&#x27;,this.props);</span></span><br><span class="line">		<span class="keyword">return</span> (</span><br><span class="line">			&lt;div&gt;</span><br><span class="line">				&lt;h1&gt;当前求和为：&#123;<span class="built_in">this</span>.props.count&#125;&lt;/h1&gt;</span><br><span class="line">				&lt;select ref=&#123;<span class="function"><span class="params">c</span> =&gt;</span> <span class="built_in">this</span>.selectNumber = c&#125;&gt;</span><br><span class="line">					&lt;option value=<span class="string">&quot;1&quot;</span>&gt;<span class="number">1</span>&lt;/option&gt;</span><br><span class="line">					&lt;option value=<span class="string">&quot;2&quot;</span>&gt;<span class="number">2</span>&lt;/option&gt;</span><br><span class="line">					&lt;option value=<span class="string">&quot;3&quot;</span>&gt;<span class="number">3</span>&lt;/option&gt;</span><br><span class="line">				&lt;/select&gt;&amp;nbsp;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.increment&#125;&gt;+&lt;/button&gt;&amp;nbsp;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.decrement&#125;&gt;-&lt;/button&gt;&amp;nbsp;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.incrementIfOdd&#125;&gt;当前求和为奇数再加&lt;/button&gt;&amp;nbsp;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.incrementAsync&#125;&gt;异步加&lt;/button&gt;&amp;nbsp;</span><br><span class="line">			&lt;/div&gt;</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用connect()()创建并暴露一个Count的容器组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> connect(</span><br><span class="line">	state =&gt; (&#123;<span class="attr">count</span>:state&#125;),</span><br><span class="line"></span><br><span class="line">	<span class="comment">//mapDispatchToProps的一般写法</span></span><br><span class="line">	<span class="comment">/* dispatch =&gt; (&#123;</span></span><br><span class="line"><span class="comment">		jia:number =&gt; dispatch(createIncrementAction(number)),</span></span><br><span class="line"><span class="comment">		jian:number =&gt; dispatch(createDecrementAction(number)),</span></span><br><span class="line"><span class="comment">		jiaAsync:(number,time) =&gt; dispatch(createIncrementAsyncAction(number,time)),</span></span><br><span class="line"><span class="comment">	&#125;) */</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//mapDispatchToProps的简写</span></span><br><span class="line">	&#123;</span><br><span class="line">		jia:createIncrementAction,</span><br><span class="line">		jian:createDecrementAction,</span><br><span class="line">		jiaAsync:createIncrementAsyncAction,</span><br><span class="line">	&#125;</span><br><span class="line">)(Count)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>8、react-redux优化总结</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(1).容器组件和UI组件整合一个文件</span><br><span class="line">(2).无需自己给容器组件传递store，给&lt;App&#x2F;&gt;包裹一个&lt;Provider store&#x3D;&#123;store&#125;&gt;即可。</span><br><span class="line">(3).使用了react-redux后也不用再自己检测redux中状态的改变了，容器组件可以自动完成这个工作。</span><br><span class="line">(4).mapDispatchToProps也可以简单的写成一个对象</span><br><span class="line">(5).一个组件要和redux“打交道”要经过哪几步？</span><br><span class="line">				(1).定义好UI组件---不暴露</span><br><span class="line">				(2).引入connect生成一个容器组件，并暴露，写法如下：</span><br><span class="line">						connect(</span><br><span class="line">							state &#x3D;&gt; (&#123;key:value&#125;), &#x2F;&#x2F;映射状态</span><br><span class="line">							&#123;key:xxxxxAction&#125; &#x2F;&#x2F;映射操作状态的方法</span><br><span class="line">						)(UI组件)</span><br><span class="line">				(4).在UI组件中通过this.props.xxxxxxx读取和操作状态</span><br></pre></td></tr></table></figure>
+
+
+
+<p>9、加一个Pearson组件，实现两个组件间的数据共享：</p>
+<p><img src="https://i.loli.net/2021/03/13/jMvufieT6zVHE9N.png" alt="image-20210313221308078"></p>
+<p>实现要点如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(1).定义一个Person组件，和Count组件通过redux共享数据。</span><br><span class="line">(2).为Person组件编写：reducer、action，配置constant常量。</span><br><span class="line">(3).重点：Person的reducer和Count的Reducer要使用combineReducers进行合并，</span><br><span class="line">		合并后的总状态是一个对象！！！</span><br><span class="line">(4).交给store的是总reducer，最后注意在组件中取出状态的时候，记得“取到位”。</span><br></pre></td></tr></table></figure>
+
+<p>1）在redux文件夹下新建两个文件夹actions和reducers，将之前Count组件的对应action文件和reducer文件改一下名放入其中，之后Person组件的action和Reducer文件也都要分别放入其中。</p>
+<p>2）Person组件的reducer文件。Person组件需要的功能是根据输入的内容添加一个人，并显示到页面上，因此存储在状态中的数据以数组包裹的一个个对象表示，每个对象包含一个人的id，姓名和年龄3个属性。reducer文件代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;ADD_PERSON&#125; <span class="keyword">from</span> <span class="string">&#x27;../constant&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化人的列表</span></span><br><span class="line"><span class="keyword">const</span> initState = [&#123;<span class="attr">id</span>:<span class="string">&#x27;001&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;tom&#x27;</span>,<span class="attr">age</span>:<span class="number">18</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">personReducer</span>(<span class="params">preState=initState,action</span>)</span>&#123;</span><br><span class="line">	<span class="comment">// console.log(&#x27;personReducer@#@#@#&#x27;);</span></span><br><span class="line">	<span class="keyword">const</span> &#123;type,data&#125; = action</span><br><span class="line">	<span class="keyword">switch</span> (type) &#123;</span><br><span class="line">		<span class="keyword">case</span> ADD_PERSON: <span class="comment">//若是添加一个人</span></span><br><span class="line">			<span class="keyword">return</span> [data,...preState]</span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			<span class="keyword">return</span> preState</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>3）constant.js中要定义好对应方法的变量：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">	该模块是用于定义action对象中type类型的常量值，目的只有一个：便于管理的同时防止程序员单词写错</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> INCREMENT = <span class="string">&#x27;increment&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> DECREMENT = <span class="string">&#x27;decrement&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> ADD_PERSON = <span class="string">&#x27;add_person&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>4）store.js中需要使用到combineReducers这个方法，将不同组件的Reducer文件结合到一起才能传给createStore()：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">	该文件专门用于暴露一个store对象，整个应用只有一个store对象</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//引入createStore，专门用于创建redux中最为核心的store对象</span></span><br><span class="line"><span class="keyword">import</span> &#123;createStore,applyMiddleware,combineReducers&#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span></span><br><span class="line"><span class="comment">//引入为Count组件服务的reducer</span></span><br><span class="line"><span class="keyword">import</span> countReducer <span class="keyword">from</span> <span class="string">&#x27;./reducers/count&#x27;</span></span><br><span class="line"><span class="comment">//引入为Count组件服务的reducer</span></span><br><span class="line"><span class="keyword">import</span> personReducer <span class="keyword">from</span> <span class="string">&#x27;./reducers/person&#x27;</span></span><br><span class="line"><span class="comment">//引入redux-thunk，用于支持异步action</span></span><br><span class="line"><span class="keyword">import</span> thunk <span class="keyword">from</span> <span class="string">&#x27;redux-thunk&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//汇总所有的reducer变为一个总的reducer</span></span><br><span class="line"><span class="keyword">const</span> allReducer = combineReducers(&#123;</span><br><span class="line">	he:countReducer,</span><br><span class="line">	rens:personReducer</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//暴露store</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> createStore(allReducer,applyMiddleware(thunk))</span><br></pre></td></tr></table></figure>
+
+
+
+<p>5）Person组件的action文件用来定义创建动作对象的方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;ADD_PERSON&#125; <span class="keyword">from</span> <span class="string">&#x27;../constant&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//创建增加一个人的action动作对象</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createAddPersonAction = <span class="function"><span class="params">personObj</span> =&gt;</span> (&#123;<span class="attr">type</span>:ADD_PERSON,<span class="attr">data</span>:personObj&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>6）App.jsx中加入Person组件：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Count <span class="keyword">from</span> <span class="string">&#x27;./containers/Count&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Person <span class="keyword">from</span> <span class="string">&#x27;./containers/Person&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> (</span><br><span class="line">			&lt;div&gt;</span><br><span class="line">				&lt;Count/&gt;</span><br><span class="line">				&lt;hr/&gt;</span><br><span class="line">				&lt;Person/&gt;</span><br><span class="line">			&lt;/div&gt;</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>7）最终形成的Person组件内容如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;nanoid&#125; <span class="keyword">from</span> <span class="string">&#x27;nanoid&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;connect&#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;createAddPersonAction&#125; <span class="keyword">from</span> <span class="string">&#x27;../../redux/actions/person&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	addPerson = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="keyword">const</span> name = <span class="built_in">this</span>.nameNode.value</span><br><span class="line">		<span class="keyword">const</span> age = <span class="built_in">this</span>.ageNode.value</span><br><span class="line">		<span class="keyword">const</span> personObj = &#123;<span class="attr">id</span>:nanoid(),name,age&#125;</span><br><span class="line">		<span class="built_in">this</span>.props.jiaYiRen(personObj)</span><br><span class="line">		<span class="built_in">this</span>.nameNode.value = <span class="string">&#x27;&#x27;</span></span><br><span class="line">		<span class="built_in">this</span>.ageNode.value = <span class="string">&#x27;&#x27;</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> (</span><br><span class="line">			&lt;div&gt;</span><br><span class="line">				&lt;h2&gt;我是Person组件,上方组件求和为&#123;<span class="built_in">this</span>.props.he&#125;&lt;/h2&gt;</span><br><span class="line">				&lt;input ref=&#123;<span class="function"><span class="params">c</span>=&gt;</span><span class="built_in">this</span>.nameNode = c&#125; type=<span class="string">&quot;text&quot;</span> placeholder=<span class="string">&quot;输入名字&quot;</span>/&gt;</span><br><span class="line">				&lt;input ref=&#123;<span class="function"><span class="params">c</span>=&gt;</span><span class="built_in">this</span>.ageNode = c&#125; type=<span class="string">&quot;text&quot;</span> placeholder=<span class="string">&quot;输入年龄&quot;</span>/&gt;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.addPerson&#125;&gt;添加&lt;/button&gt;</span><br><span class="line">				&lt;ul&gt;</span><br><span class="line">					&#123;</span><br><span class="line">						<span class="built_in">this</span>.props.yiduiren.map(<span class="function">(<span class="params">p</span>)=&gt;</span>&#123;</span><br><span class="line">							<span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&#123;p.id&#125;</span>&gt;</span>&#123;p.name&#125;--&#123;p.age&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">						&#125;)</span><br><span class="line">					&#125;</span><br><span class="line">				&lt;/ul&gt;</span><br><span class="line">			&lt;/div&gt;</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> connect(</span><br><span class="line">	state =&gt; (&#123;<span class="attr">yiduiren</span>:state.rens,<span class="attr">he</span>:state.he&#125;),<span class="comment">//映射状态</span></span><br><span class="line">	&#123;<span class="attr">jiaYiRen</span>:createAddPersonAction&#125;<span class="comment">//映射操作状态的方法</span></span><br><span class="line">)(Person)</span><br></pre></td></tr></table></figure>
+
+<p>在Person组件中创建id时记得使用nanoid来进行随机id的生成，另外addPerson方法中增加完人的信息记录后记得将几个输入框的内容置为空。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># React练习笔记</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/12/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%82%E5%92%8C%E6%A1%88%E4%BE%8B%EF%BC%88%E5%BC%82%E6%AD%A5action%E7%89%88%EF%BC%89/" rel="prev" title="React练习笔记：求和案例（异步action版）[转载]">
+                  <i class="fa fa-chevron-left"></i> React练习笔记：求和案例（异步action版）[转载]
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/03/13/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BA%AF%E5%87%BD%E6%95%B0%E5%92%8C%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/" rel="next" title="React练习笔记：纯函数和高阶函数">
+                  React练习笔记：纯函数和高阶函数 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leo Qian</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

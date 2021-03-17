@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"leo-captain.github.io","root":"/","images":"/images","scheme":"Gemini","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="本笔记基于尚硅谷的React视频教程完成，原视频链接地址： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1wy4y1D7JT?p&#x3D;74 如有侵权，请及时告知本人删除~ 一、SPA的概念与理解： 1、单页web应用，single page web application，SPA 2、整个应用只有一个完整的页面 3、点击页面中的链接不会刷新页面，只会做页面的局部更新 4、数据都需">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React练习笔记：React路由[转载]">
+<meta property="og:url" content="http://leo-captain.github.io/2021/03/08/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9AReact%E8%B7%AF%E7%94%B1/index.html">
+<meta property="og:site_name" content="Leo的小屋">
+<meta property="og:description" content="本笔记基于尚硅谷的React视频教程完成，原视频链接地址： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1wy4y1D7JT?p&#x3D;74 如有侵权，请及时告知本人删除~ 一、SPA的概念与理解： 1、单页web应用，single page web application，SPA 2、整个应用只有一个完整的页面 3、点击页面中的链接不会刷新页面，只会做页面的局部更新 4、数据都需">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/03/11/cuqOIXRaK1N8WTS.png">
+<meta property="article:published_time" content="2021-03-08T13:55:25.000Z">
+<meta property="article:modified_time" content="2021-03-12T02:42:46.513Z">
+<meta property="article:author" content="Leo Qian">
+<meta property="article:tag" content="React练习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/03/11/cuqOIXRaK1N8WTS.png">
+
+
+<link rel="canonical" href="http://leo-captain.github.io/2021/03/08/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9AReact%E8%B7%AF%E7%94%B1/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>React练习笔记：React路由[转载] | Leo的小屋</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Leo的小屋</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Leo Qian</p>
+  <div class="site-description" itemprop="description">欢迎来到Leo的小屋，和Leo一起领略前端的无限魅力</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Leo-captain" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Leo-captain" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1537938015@qq.com" title="E-Mail → mailto:1537938015@qq.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+      <br>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=404783770&auto=1&height=66"></iframe>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://leo-captain.github.io/2021/03/08/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9AReact%E8%B7%AF%E7%94%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Leo Qian">
+      <meta itemprop="description" content="欢迎来到Leo的小屋，和Leo一起领略前端的无限魅力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Leo的小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React练习笔记：React路由[转载]
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-08 21:55:25" itemprop="dateCreated datePublished" datetime="2021-03-08T21:55:25+08:00">2021-03-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-12 10:42:46" itemprop="dateModified" datetime="2021-03-12T10:42:46+08:00">2021-03-12</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本笔记基于尚硅谷的React视频教程完成，原视频链接地址：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wy4y1D7JT?p=74">https://www.bilibili.com/video/BV1wy4y1D7JT?p=74</a></p>
+<p>如有侵权，请及时告知本人删除~</p>
+<p>一、SPA的概念与理解：</p>
+<p>1、单页web应用，single page web application，SPA</p>
+<p>2、整个应用只有一个完整的页面</p>
+<p>3、点击页面中的链接不会刷新页面，只会做页面的局部更新</p>
+<p>4、数据都需要通过ajax获取，并在前端异步展现</p>
+<p>二、路由的理解：</p>
+<ol>
+<li><p>什么是路由</p>
+</li>
+<li><p>一个路由就是一个映射关系(key:value)</p>
+</li>
+<li><p>key为路径, value可能是function或component</p>
+</li>
+<li><p>路由分类</p>
+</li>
+<li><p>后端路由：</p>
+</li>
+</ol>
+<ol>
+<li><p>理解： value是function, 用来处理客户端提交的请求。</p>
+</li>
+<li><p>注册路由： router.get(path, function(req, res))</p>
+</li>
+<li><p>工作过程：当node接收到一个请求时, 根据请求路径找到匹配的路由, 调用路由中的函数来处理请求, 返回响应数据</p>
+</li>
+</ol>
+<ol start="2">
+<li>前端路由：</li>
+</ol>
+<ol>
+<li><p>浏览器端路由，value是component，用于展示页面内容。</p>
+</li>
+<li><p>注册路由: <Route path="/test" component={Test}></p>
+</li>
+</ol>
+<p>工作过程：当浏览器的path变为/test时, 当前路由组件就会变为Test组件</p>
+<p>三、前端路由的工作原理</p>
+<p>在BOM浏览器对象上有一个history对象，专门用于管理浏览器的路径、历史记录等，使用原生API进行操作可能较为繁琐，因此可以使用一个库history.js对其进行操作，封装之后的history对象会拥有更多便捷的API。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>前端路由的基石_history<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://www.atguigu.com&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;return push(&#x27;/test1&#x27;) &quot;</span>&gt;</span>push test1<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&quot;push(&#x27;/test2&#x27;)&quot;</span>&gt;</span>push test2<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&quot;replace(&#x27;/test3&#x27;)&quot;</span>&gt;</span>replace test3<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&quot;back()&quot;</span>&gt;</span><span class="symbol">&amp;lt;</span>= 回退<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&quot;forword()&quot;</span>&gt;</span>前进 =<span class="symbol">&amp;gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcss.com/history/4.7.2/history.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span></span><br><span class="line"><span class="javascript">		<span class="comment">// let history = History.createBrowserHistory() //方法一，直接使用H5推出的history身上的API</span></span></span><br><span class="line"><span class="javascript">		<span class="keyword">let</span> history = History.createHashHistory() <span class="comment">//方法二，hash值（锚点）</span></span></span><br><span class="line"></span><br><span class="line"><span class="javascript">		<span class="function"><span class="keyword">function</span> <span class="title">push</span> (<span class="params">path</span>) </span>&#123;</span></span><br><span class="line">			history.push(path)</span><br><span class="line"><span class="javascript">			<span class="keyword">return</span> <span class="literal">false</span></span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line"><span class="javascript">		<span class="function"><span class="keyword">function</span> <span class="title">replace</span> (<span class="params">path</span>) </span>&#123;</span></span><br><span class="line">			history.replace(path)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line"><span class="javascript">		<span class="function"><span class="keyword">function</span> <span class="title">back</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line">			history.goBack()</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line"><span class="javascript">		<span class="function"><span class="keyword">function</span> <span class="title">forword</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line">			history.goForward()</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line"><span class="javascript">		history.listen(<span class="function">(<span class="params">location</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">			<span class="built_in">console</span>.log(<span class="string">&#x27;请求路由路径变化了&#x27;</span>, location)</span></span><br><span class="line">		&#125;)</span><br><span class="line">	<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如上面的代码所示，创建一个封装后的history对象后（可以使用createBrowserHistory()和createHashHistory()两种不同的方法创建），可以通过push方法向浏览器的历史记录当中压入一条新的内容，并且push方法最后返回一个false，这就可以让a标签原本的跳转功能失效，仅仅改变浏览器的地址，却不会跳转。</p>
+<p>而history.listen这个方法开启之后则可以随时监听浏览器中地址的变化，通过监听到的地址变化，那么就可以将地址中对应的组件挂载到页面上，从而实现一个完整的React路由的功能。</p>
+<p>四、路由的基本使用</p>
+<p>React路由工作的基本流程如下所示：</p>
+<p><img src="https://i.loli.net/2021/03/11/cuqOIXRaK1N8WTS.png" alt="image-20210311230928242"></p>
+<p>上面这个网页的App.jsx源代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &#x27;react&#x27;</span><br><span class="line">import &#123;Link,Route&#125; from &#x27;react-router-dom&#x27;</span><br><span class="line">import Home from &#x27;./components/Home&#x27;</span><br><span class="line">import About from &#x27;./components/About&#x27;</span><br><span class="line"></span><br><span class="line">export default class App extends Component &#123;</span><br><span class="line">	render() &#123;</span><br><span class="line">		return (</span><br><span class="line">			<span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;row&quot;</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;col-xs-offset-2 col-xs-8&quot;</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;page-header&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">h2</span>&gt;</span>React Router Demo<span class="tag">&lt;/<span class="name">h2</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;row&quot;</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;col-xs-2 col-xs-offset-2&quot;</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;list-group&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">							&#123;/* 原生html中，靠<span class="tag">&lt;<span class="name">a</span>&gt;</span>跳转不同的页面 */&#125;</span><br><span class="line">							&#123;/* <span class="tag">&lt;<span class="name">a</span> <span class="attr">className</span>=<span class="string">&quot;list-group-item&quot;</span> <span class="attr">href</span>=<span class="string">&quot;./about.html&quot;</span>&gt;</span>About<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">							<span class="tag">&lt;<span class="name">a</span> <span class="attr">className</span>=<span class="string">&quot;list-group-item active&quot;</span> <span class="attr">href</span>=<span class="string">&quot;./home.html&quot;</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">a</span>&gt;</span> */&#125;</span><br><span class="line"></span><br><span class="line">							&#123;/* 在React中靠路由链接实现切换组件--编写路由链接 */&#125;</span><br><span class="line">							<span class="tag">&lt;<span class="name">Link</span> <span class="attr">className</span>=<span class="string">&quot;list-group-item&quot;</span> <span class="attr">to</span>=<span class="string">&quot;/about&quot;</span>&gt;</span>About<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><br><span class="line">							<span class="tag">&lt;<span class="name">Link</span> <span class="attr">className</span>=<span class="string">&quot;list-group-item&quot;</span> <span class="attr">to</span>=<span class="string">&quot;/home&quot;</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;col-xs-6&quot;</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;panel&quot;</span>&gt;</span></span><br><span class="line">							<span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;panel-body&quot;</span>&gt;</span></span><br><span class="line">								&#123;/* 注册路由 */&#125;</span><br><span class="line">								<span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/about&quot;</span> <span class="attr">component</span>=<span class="string">&#123;About&#125;/</span>&gt;</span></span><br><span class="line">								<span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/home&quot;</span> <span class="attr">component</span>=<span class="string">&#123;Home&#125;/</span>&gt;</span></span><br><span class="line">							<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">						<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>index.js源代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引入react核心库</span></span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="comment">//引入ReactDOM</span></span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">import</span> &#123;BrowserRouter&#125; <span class="keyword">from</span> <span class="string">&#x27;react-router-dom&#x27;</span></span><br><span class="line"><span class="comment">//引入App</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">	&lt;BrowserRouter&gt;</span><br><span class="line">		&lt;App/&gt;</span><br><span class="line">	&lt;/BrowserRouter&gt;,</span><br><span class="line">	<span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>完成上面这个页面所需的步骤如下：</p>
+<p>1、将原始的about和home页面搭建好，找出其相同与不同之处，将相同的地方抽离出来放进App.jsx，不同的地方抽离出来分别放进两个组件中。</p>
+<p>2、引入’react-router-dom’中的Link和Route，将原始的a标签用Link替代，注意：Link中href要改写成to，对应路径也要改成相应的路由写法</p>
+<p>3、在需要展示不同组件自身内容的地方注册路由，使用Route来代替原先的组件标签，在Route标签中用path指定浏览器地址对应的路由，用component指定对应的组件（要记得引入）</p>
+<p>4、光有上面的步骤还不够，需要来到index.js中，在App根组件的外侧包裹一个BrowserRouter标签（也可以是HashRouter标签），表示将App里面的所有路由相关内容交付给这一个路由对象处理，这样就可以实现React路由的跳转功能了。</p>
+<p>PS：注意，如果使用HashRouter，那么原本的/about会变成/#/about，**#后面的是锚点值，不会作为资源发送给服务器**。</p>
+<p>五、路由组件和一般组件</p>
+<p>使用路由动态挂载的组件称为路由组价，一般放在/src/pages文件夹里；其它组件称为一般组件，一般放在/src/components文件夹里。</p>
+<p>总结：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">1.写法不同：</span><br><span class="line">			一般组件：&lt;Demo&#x2F;&gt;</span><br><span class="line">			路由组件：&lt;Route path&#x3D;&quot;&#x2F;demo&quot; component&#x3D;&#123;Demo&#125;&#x2F;&gt;</span><br><span class="line">2.存放位置不同：</span><br><span class="line">			一般组件：components</span><br><span class="line">			路由组件：pages</span><br><span class="line">3.接收到的props不同：</span><br><span class="line">			一般组件：写组件标签时传递了什么，就能收到什么</span><br><span class="line">			路由组件：接收到三个固定的属性</span><br><span class="line">								history:</span><br><span class="line">											go: ƒ go(n)</span><br><span class="line">											goBack: ƒ goBack()</span><br><span class="line">											goForward: ƒ goForward()</span><br><span class="line">											push: ƒ push(path, state)</span><br><span class="line">											replace: ƒ replace(path, state)</span><br><span class="line">								location:</span><br><span class="line">											pathname: &quot;&#x2F;about&quot;</span><br><span class="line">											search: &quot;&quot;</span><br><span class="line">											state: undefined</span><br><span class="line">								match:</span><br><span class="line">											params: &#123;&#125;</span><br><span class="line">											path: &quot;&#x2F;about&quot;</span><br><span class="line">											url: &quot;&#x2F;about&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>六、实现点击导航栏按钮时的高亮效果：NavLink标签</p>
+<p>方法：可以将原始的Link标签替换为NavLink标签，NavLink标签自带一个属性activeClassName，默认值为active，点击哪个NavLink标签那它就会自动给自己的className加上activeClassName对应的那个值。默认情况下，如果css中写了一个类名为active的样式，那么当点击NavLink标签时，就会给该标签加上对应的样式。</p>
+<p>七、基于NavLink标签封装一个自定义的组件MyNavLink</p>
+<p>如果使用NavLink标签时需要指定activeClassName的值，并且要用className给该标签加上特定的样式，那么多次使用该标签就会造成代码的冗余，可以基于NavLink标签封装一个自定义的组件MyNavLink来解决这个问题：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">&quot;list-group&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    &#123;<span class="comment">/* 原生html中，靠&lt;a&gt;跳转不同的页面 */</span>&#125;</span><br><span class="line">    &#123;<span class="comment">/* &lt;a className=&quot;list-group-item&quot; href=&quot;./about.html&quot;&gt;About&lt;/a&gt;</span></span><br><span class="line"><span class="comment">							&lt;a className=&quot;list-group-item active&quot; href=&quot;./home.html&quot;&gt;Home&lt;/a&gt; */</span>&#125;</span><br><span class="line"></span><br><span class="line">    &#123;<span class="comment">/* 在React中靠路由链接实现切换组件--编写路由链接 */</span>&#125;</span><br><span class="line">    &lt;MyNavLink to=<span class="string">&quot;/about&quot;</span>&gt;About&lt;/MyNavLink&gt;</span><br><span class="line">    &lt;MyNavLink to=<span class="string">&quot;/home&quot;</span>&gt;Home&lt;/MyNavLink&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在React中，如果是非自闭合标签，那么放在开始标签和结束标签中的内容实际上会被props收集到，并放进props.children这个属性当中，也就是说，上面的这种写法可以改成下面的形式：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">&quot;list-group&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    &#123;<span class="comment">/* 原生html中，靠&lt;a&gt;跳转不同的页面 */</span>&#125;</span><br><span class="line">    &#123;<span class="comment">/* &lt;a className=&quot;list-group-item&quot; href=&quot;./about.html&quot;&gt;About&lt;/a&gt;</span></span><br><span class="line"><span class="comment">							&lt;a className=&quot;list-group-item active&quot; href=&quot;./home.html&quot;&gt;Home&lt;/a&gt; */</span>&#125;</span><br><span class="line"></span><br><span class="line">    &#123;<span class="comment">/* 在React中靠路由链接实现切换组件--编写路由链接 */</span>&#125;</span><br><span class="line">    &lt;MyNavLink to=<span class="string">&quot;/about&quot;</span> children=<span class="string">&quot;About&quot;</span>/&gt;</span><br><span class="line">    &lt;MyNavLink to=<span class="string">&quot;/home&quot;</span> children=<span class="string">&quot;Home&quot;</span>/&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这两种方式都可以让MyNavLink组件通过this.props.children属性接收到标签体中的值。</p>
+<p>而MyNavLink组件的index.jsx代码如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;NavLink&#125; <span class="keyword">from</span> <span class="string">&#x27;react-router-dom&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">MyNavLink</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="comment">// console.log(this.props);</span></span><br><span class="line">		<span class="keyword">return</span> (</span><br><span class="line">			&lt;NavLink activeClassName=<span class="string">&quot;atguigu&quot;</span> className=<span class="string">&quot;list-group-item&quot;</span> &#123;...this.props&#125;/&gt;</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>MyNavLink组件依旧需要依托NavLink组件才可以，不过可以向其中传入自定义的activeClassName和className的值，并且App.jsx传给MyNavLink组件的值（包括to属性以及标签体内容children属性在内），都可以通过{…this.props}直接全部传给下一个组件NavLink，这样一来就实现了对NavLink组件的封装。</p>
+<p>PS：注意，MyNavLink组件本身属于一般组件，因此要放在/src/components文件夹下</p>
+<p>八、Switch的使用</p>
+<p>注册路由时，如果同一个路由对应了多个组件，那么匹配到这个路由的情况下就会把所有匹配到的组件挂载到页面上；此外，不管路由是否已经被匹配到了，React都会把所有的注册路由都遍历一遍，这样非常浪费时间。</p>
+<p>为了解决这个问题，可以在注册路由的外侧加一组Switch标签，这样一旦匹配到第一个对应的路由，就不会再向下匹配了：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">&quot;panel-body&quot;</span>&gt;</span><br><span class="line">    &#123;<span class="comment">/* 注册路由 */</span>&#125;</span><br><span class="line">    &lt;Switch&gt;</span><br><span class="line">        &lt;Route path=<span class="string">&quot;/about&quot;</span> component=&#123;About&#125;/&gt;</span><br><span class="line">        &lt;Route path=<span class="string">&quot;/home&quot;</span> component=&#123;Home&#125;/&gt;</span><br><span class="line">        &lt;Route path=<span class="string">&quot;/home&quot;</span> component=&#123;Test&#125;/&gt;</span><br><span class="line">    &lt;/Switch&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>九、解决样式丢失的问题</p>
+<p>假如要在路由地址前面加上特定的前缀。例如：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">&quot;col-xs-2 col-xs-offset-2&quot;</span>&gt;</span><br><span class="line">    &lt;div className=<span class="string">&quot;list-group&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">        &#123;<span class="comment">/* 原生html中，靠&lt;a&gt;跳转不同的页面 */</span>&#125;</span><br><span class="line">        &#123;<span class="comment">/* &lt;a className=&quot;list-group-item&quot; href=&quot;./about.html&quot;&gt;About&lt;/a&gt;</span></span><br><span class="line"><span class="comment">							&lt;a className=&quot;list-group-item active&quot; href=&quot;./home.html&quot;&gt;Home&lt;/a&gt; */</span>&#125;</span><br><span class="line"></span><br><span class="line">        &#123;<span class="comment">/* 在React中靠路由链接实现切换组件--编写路由链接 */</span>&#125;</span><br><span class="line">        &lt;MyNavLink to=<span class="string">&quot;/atguigu/about&quot;</span>&gt;About&lt;/MyNavLink&gt;</span><br><span class="line">        &lt;MyNavLink to=<span class="string">&quot;/atguigu/home&quot;</span>&gt;Home&lt;/MyNavLink&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div className=<span class="string">&quot;col-xs-6&quot;</span>&gt;</span><br><span class="line">    &lt;div className=<span class="string">&quot;panel&quot;</span>&gt;</span><br><span class="line">        &lt;div className=<span class="string">&quot;panel-body&quot;</span>&gt;</span><br><span class="line">            &#123;<span class="comment">/* 注册路由 */</span>&#125;</span><br><span class="line">            &lt;Switch&gt;</span><br><span class="line">                &lt;Route path=<span class="string">&quot;/atguigu/about&quot;</span> component=&#123;About&#125;/&gt;</span><br><span class="line">                &lt;Route path=<span class="string">&quot;/atguigu/home&quot;</span> component=&#123;Home&#125;/&gt;</span><br><span class="line">            &lt;/Switch&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>并且index.html引入css样式的方式采用的是./形式的相对路径：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;./css/bootstrap.css&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>那么就会产生样式丢失的问题，原因是采用相对路径时请求css文件的地址会从原来的localhost:3000/css/bootstrap.css变成localhost:3000/atguigu/css/bootstrap.css，而后者的地址实际上根本不存在，向localhost:3000请求这种不存在的地址时，就会默认返回index.html的内容，而不是样式文件，这样也就导致页面的样式丢失了。</p>
+<p>解决这个问题的方法有三种：</p>
+<p>1、将相对路径改成绝对路径：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/css/bootstrap.css&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2、在路径前加上表示public文件夹的%PUBLIC_URL%：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;%PUBLIC_URL%/css/bootstrap.css&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>3、使用哈希路由，因为#后面的内容不会发给服务器，即使使用相对路径那么给服务器发的请求依然是localhost:3000/css/bootstrap.css：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引入react核心库</span></span><br><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="comment">//引入ReactDOM</span></span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">import</span> &#123;HashRouter&#125; <span class="keyword">from</span> <span class="string">&#x27;react-router-dom&#x27;</span></span><br><span class="line"><span class="comment">//引入App</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">	&lt;HashRouter&gt;</span><br><span class="line">		&lt;App/&gt;</span><br><span class="line">	&lt;/HashRouter&gt;,</span><br><span class="line">	<span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>十、路由的严格匹配和模糊匹配</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.默认使用的是模糊匹配（简单记：【输入的路径】必须包含要【匹配的路径】，且顺序要一致）</span><br><span class="line">2.开启严格匹配：&lt;Route exact&#x3D;&#123;true&#125; path&#x3D;&quot;&#x2F;about&quot; component&#x3D;&#123;About&#125;&#x2F;&gt;</span><br><span class="line">注意：exact&#x3D;&#123;true&#125; 可以简写为exact</span><br><span class="line">3.严格匹配不要随便开启，需要再开，有些时候开启会导致无法继续匹配二级路由</span><br></pre></td></tr></table></figure>
+
+
+
+<p>十一、Redirect路由重定向</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.一般写在所有路由注册的最下方，当所有路由都无法匹配时，跳转到Redirect指定的路由</span><br><span class="line">2.具体编码：</span><br><span class="line">&lt;Switch&gt;</span><br><span class="line">    &lt;Route path&#x3D;&quot;&#x2F;about&quot; component&#x3D;&#123;About&#125;&#x2F;&gt;</span><br><span class="line">    &lt;Route path&#x3D;&quot;&#x2F;home&quot; component&#x3D;&#123;Home&#125;&#x2F;&gt;</span><br><span class="line">    &lt;Redirect to&#x3D;&quot;&#x2F;about&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;Switch&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>十二、嵌套路由</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.注册子路由时要写上父路由的path值</span><br><span class="line">2.路由的匹配是按照注册路由的顺序进行的</span><br></pre></td></tr></table></figure>
+
+
+
+<p>十三、向路由组件传递参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1.params参数</span><br><span class="line">    路由链接(携带参数)：&lt;Link to&#x3D;&#39;&#x2F;demo&#x2F;test&#x2F;tom&#x2F;18&#39;&#125;&gt;详情&lt;&#x2F;Link&gt;</span><br><span class="line">    注册路由(声明接收)：&lt;Route path&#x3D;&quot;&#x2F;demo&#x2F;test&#x2F;:name&#x2F;:age&quot; component&#x3D;&#123;Test&#125;&#x2F;&gt;</span><br><span class="line">    接收参数：this.props.match.params</span><br><span class="line">2.search参数</span><br><span class="line">    路由链接(携带参数)：&lt;Link to&#x3D;&#39;&#x2F;demo&#x2F;test?name&#x3D;tom&amp;age&#x3D;18&#39;&#125;&gt;详情&lt;&#x2F;Link&gt;</span><br><span class="line">    注册路由(无需声明，正常注册即可)：&lt;Route path&#x3D;&quot;&#x2F;demo&#x2F;test&quot; component&#x3D;&#123;Test&#125;&#x2F;&gt;</span><br><span class="line">    接收参数：this.props.location.search</span><br><span class="line">    备注：获取到的search是urlencoded编码字符串，需要借助querystring解析</span><br><span class="line">3.state参数</span><br><span class="line">    路由链接(携带参数)：&lt;Link to&#x3D;&#123;&#123;pathname:&#39;&#x2F;demo&#x2F;test&#39;,state:&#123;name:&#39;tom&#39;,age:18&#125;&#125;&#125;&gt;详情&lt;&#x2F;Link&gt;</span><br><span class="line">    注册路由(无需声明，正常注册即可)：&lt;Route path&#x3D;&quot;&#x2F;demo&#x2F;test&quot; component&#x3D;&#123;Test&#125;&#x2F;&gt;</span><br><span class="line">    接收参数：this.props.location.state</span><br><span class="line">    备注：刷新也可以保留住参数</span><br></pre></td></tr></table></figure>
+
+
+
+<p>十四、push与replace模式</p>
+<p>React中的路由跳转默认是push模式，也就是每次跳转路由都会产生一个历史记录，之后可以通过回退返回上一次的页面。假如在跳转链接上加上replace，那么在点击这个链接的时候就会进行replace模式的跳转，不留下任何历史记录：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyNavLink replace to=<span class="string">&quot;/about&quot;</span>&gt;About&lt;/MyNavLink&gt;</span><br><span class="line">&lt;MyNavLink replace to=<span class="string">&quot;/home&quot;</span>&gt;Home&lt;/MyNavLink&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>十五、编程式路由导航</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">借助this.prosp.history对象上的API对操作路由跳转、前进、后退</span><br><span class="line">-this.prosp.history.push()</span><br><span class="line">-this.prosp.history.replace()</span><br><span class="line">-this.prosp.history.goBack()</span><br><span class="line">-this.prosp.history.goForward()</span><br><span class="line">-this.prosp.history.go()</span><br></pre></td></tr></table></figure>
+
+
+
+<p>十六、withRouter的使用</p>
+<p>当一般组件需要使用路由组件this.props中接收到的三个API时，可以用withRouter给一般组件添加上这个功能：</p>
+<p>Header组件代码：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;withRouter&#125; <span class="keyword">from</span> <span class="string">&#x27;react-router-dom&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Header</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	back = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="built_in">this</span>.props.history.goBack()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	forward = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="built_in">this</span>.props.history.goForward()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	go = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">		<span class="built_in">this</span>.props.history.go(-<span class="number">2</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;Header组件收到的props是&#x27;</span>,<span class="built_in">this</span>.props);</span><br><span class="line">		<span class="keyword">return</span> (</span><br><span class="line">			&lt;div className=<span class="string">&quot;page-header&quot;</span>&gt;</span><br><span class="line">				&lt;h2&gt;React Router Demo&lt;/h2&gt;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.back&#125;&gt;回退&lt;/button&gt;&amp;nbsp;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.forward&#125;&gt;前进&lt;/button&gt;&amp;nbsp;</span><br><span class="line">				&lt;button onClick=&#123;<span class="built_in">this</span>.go&#125;&gt;go&lt;/button&gt;</span><br><span class="line">			&lt;/div&gt;</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> withRouter(Header)</span><br><span class="line"></span><br><span class="line"><span class="comment">//withRouter可以加工一般组件，让一般组件具备路由组件所特有的API</span></span><br><span class="line"><span class="comment">//withRouter的返回值是一个新组件</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>十七、BrowserRouter与HashRouter的区别（一般情况下还是BrowserRouter用的更多）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1.底层原理不一样：</span><br><span class="line">    BrowserRouter使用的是H5的history API，不兼容IE9及以下版本。</span><br><span class="line">    HashRouter使用的是URL的哈希值。</span><br><span class="line">2.path表现形式不一样</span><br><span class="line">    BrowserRouter的路径中没有#,例如：localhost:3000&#x2F;demo&#x2F;test</span><br><span class="line">    HashRouter的路径包含#,例如：localhost:3000&#x2F;#&#x2F;demo&#x2F;test</span><br><span class="line">3.刷新后对路由state参数的影响</span><br><span class="line">    (1).BrowserRouter没有任何影响，因为state保存在history对象中。</span><br><span class="line">    (2).HashRouter刷新后会导致路由state参数的丢失！！！</span><br><span class="line">4.备注：HashRouter可以用于解决一些路径错误相关的问题。</span><br></pre></td></tr></table></figure>
+
+
+
+<p>十八、antd的按需引入与自定义主题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">1.安装依赖：yarn add react-app-rewired customize-cra babel-plugin-import less less-loader</span><br><span class="line">2.修改package.json</span><br><span class="line">		....</span><br><span class="line">			&quot;scripts&quot;: &#123;</span><br><span class="line">				&quot;start&quot;: &quot;react-app-rewired start&quot;,</span><br><span class="line">				&quot;build&quot;: &quot;react-app-rewired build&quot;,</span><br><span class="line">				&quot;test&quot;: &quot;react-app-rewired test&quot;,</span><br><span class="line">				&quot;eject&quot;: &quot;react-scripts eject&quot;</span><br><span class="line">			&#125;,</span><br><span class="line">		....</span><br><span class="line">3.根目录下创建config-overrides.js</span><br><span class="line">		&#x2F;&#x2F;配置具体的修改规则</span><br><span class="line">		const &#123; override, fixBabelImports,addLessLoader&#125; &#x3D; require(&#39;customize-cra&#39;);</span><br><span class="line">		module.exports &#x3D; override(</span><br><span class="line">			fixBabelImports(&#39;import&#39;, &#123;</span><br><span class="line">				libraryName: &#39;antd&#39;,</span><br><span class="line">				libraryDirectory: &#39;es&#39;,</span><br><span class="line">				style: true,</span><br><span class="line">			&#125;),</span><br><span class="line">			addLessLoader(&#123;</span><br><span class="line">				lessOptions:&#123;</span><br><span class="line">					javascriptEnabled: true,</span><br><span class="line">					modifyVars: &#123; &#39;@primary-color&#39;: &#39;green&#39; &#125;,</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;),</span><br><span class="line">		);</span><br><span class="line">4.备注：不用在组件里亲自引入样式了，即：import &#39;antd&#x2F;dist&#x2F;antd.css&#39;应该删掉</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># React练习笔记</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/08/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9Agithub%E6%90%9C%E7%B4%A2%E6%A1%88%E4%BE%8B%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="React练习笔记：github搜索案例（二）：进行fetch改造">
+                  <i class="fa fa-chevron-left"></i> React练习笔记：github搜索案例（二）：进行fetch改造
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/03/12/React%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9ARedux/" rel="next" title="React练习笔记：Redux[转载]">
+                  React练习笔记：Redux[转载] <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leo Qian</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
